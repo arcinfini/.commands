@@ -11,34 +11,31 @@ parser.add_argument('--destination', default='.',
 
 
 args = parser.parse_args()
-print(args)
 
 from os.path import join, exists, isdir, abspath, splitext, basename
 from os import renames, listdir
 
 from multiprocessing import Pool
 
+dirname = args.dir
+
 def sort_file(pathname):
     """Sorts the path if it is not a directory."""
-    dirname = sys.argv[1]
     
     file = join(dirname, pathname)
     if isdir(file): return
 
     name, ext = splitext(pathname)
-    base = basename(name)
 
-    # tojoin = []
-    # if tojoin.count('.') > 0: tojoin.remove('.')
     new = join(dirname, args.destination, ext, pathname)
     try: renames(file, new)
     except Exception as e: print(str(e))
 
-def main(dirname):
+def main():
     
     # Check if isdir
     if not exists(dirname) or not isdir(dirname): 
-        sys.exit("argument given is not a directory")
+        sys.exit("dir given is not a directory")
     
     # Exit if unsure
     response = input(f"Are you sure you want to sort the files in {abspath(dirname)}: ")
@@ -49,4 +46,4 @@ def main(dirname):
         pool.map(sort_file, files)
 
 if __name__ == '__main__':
-    main(sys.argv[1]) # dirname
+    main() # dirname
