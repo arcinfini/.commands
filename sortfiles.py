@@ -9,7 +9,6 @@ parser.add_argument('--destination', default='.',
     help='The directory underneath the sorted directory to store the sorted files'
 )
 
-
 args = parser.parse_args()
 
 from os.path import join, exists, isdir, abspath, splitext, basename
